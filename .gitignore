@@ -1,6 +1,7 @@
 *.exe
 *.dll
 lib/*
+backup/*
 
 32-bit/*
 64-bit/*

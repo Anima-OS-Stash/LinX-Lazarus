@@ -189,8 +189,8 @@ object FormAbout: TFormAbout
     Left = 105
     Height = 14
     Top = 90
-    Width = 77
-    Caption = 'No PNG support'
+    Width = 208
+    Caption = 'No PNG support - Lazarus Port by Xfennec.'
     ParentColor = False
   end
   object SpeedButtonInfo: TSpeedButton
