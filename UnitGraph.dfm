@@ -1,21 +1,17 @@
 object FormGraph: TFormGraph
-  Left = 0
-  Top = 0
+  Left = 452
+  Height = 200
+  Top = 272
+  Width = 400
   AlphaBlend = True
   BorderStyle = bsSizeToolWin
   Caption = 'Graph'
   ClientHeight = 200
   ClientWidth = 400
   Color = clWindow
-  TransparentColorValue = clWindowText
   Constraints.MinHeight = 100
   Constraints.MinWidth = 200
-  DoubleBuffered = True
-  ParentFont = True
-  GlassFrame.SheetOfGlass = True
   KeyPreview = True
-  OldCreateOrder = False
-  Scaled = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnDblClick = FormDblClick
@@ -25,46 +21,39 @@ object FormGraph: TFormGraph
   OnMouseWheelUp = FormMouseWheelUp
   OnPaint = FormPaint
   OnResize = FormResize
-  DesignSize = (
-    400
-    200)
-  PixelsPerInch = 96
-  TextHeight = 13
+  ParentFont = True
+  LCLVersion = '1.0.14.0'
   object EditMax: TEdit
     Left = 5
+    Height = 21
     Top = 11
     Width = 30
-    Height = 21
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
     MaxLength = 5
-    ParentFont = False
-    TabOrder = 0
-    Visible = False
     OnChange = EditMaxChange
     OnExit = EditMaxExit
     OnKeyPress = EditMaxKeyPress
+    ParentFont = False
+    TabOrder = 0
+    Visible = False
   end
   object EditMin: TEdit
     Left = 5
+    Height = 21
     Top = 176
     Width = 30
-    Height = 21
     Anchors = [akLeft, akBottom]
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
     MaxLength = 5
-    ParentFont = False
-    TabOrder = 1
-    Visible = False
     OnChange = EditMinChange
     OnExit = EditMaxExit
     OnKeyPress = EditMaxKeyPress
+    ParentFont = False
+    TabOrder = 1
+    Visible = False
   end
 end

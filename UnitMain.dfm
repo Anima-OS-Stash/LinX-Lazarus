@@ -1,220 +1,186 @@
 object FormMain: TFormMain
-  Left = 0
-  Top = 0
+  Left = 352
+  Height = 275
+  Top = 244
+  Width = 520
   ActiveControl = ListViewTable
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'LinX - Simply Linpack'
-  ClientHeight = 275
+  ClientHeight = 256
   ClientWidth = 520
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  Font.Style = []
   KeyPreview = True
   Menu = MainMenu
-  OldCreateOrder = False
-  Position = poDesigned
-  Scaled = False
-  ShowHint = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
-  DesignSize = (
-    520
-    275)
-  PixelsPerInch = 96
-  TextHeight = 13
+  ShowHint = True
+  LCLVersion = '1.0.14.0'
   object LabelMem: TLabel
-    Left = 170
-    Top = 8
-    Width = 69
-    Height = 13
+    Left = 169
+    Height = 14
     Hint = 'Amount of memory to be used'
+    Top = 8
+    Width = 70
     Anchors = [akTop]
     Caption = 'Memory (MiB):'
-    Transparent = True
+    ParentColor = False
   end
   object LabelRuns: TLabel
-    Left = 380
+    Left = 379
+    Height = 14
+    Hint = 'Testing will stop either after the specified number of times or after a specified time interval '
     Top = 8
-    Width = 23
-    Height = 13
-    Hint = 
-      'Testing will stop either after the specified number of times or ' +
-      'after a specified time interval '
+    Width = 24
     Anchors = [akTop, akRight]
     Caption = 'Run:'
-    Transparent = True
+    ParentColor = False
   end
   object LabelPS: TLabel
     Left = 5
+    Height = 14
+    Hint = 'Affects calculations'' complexity and duration (set higher values for more stress)'
     Top = 8
-    Width = 63
-    Height = 13
-    Hint = 
-      'Affects calculations'#39' complexity and duration (set higher values' +
-      ' for more stress)'
+    Width = 64
     Caption = 'Problem size:'
-    Transparent = True
+    ParentColor = False
   end
   object SpeedButtonAllMem: TSpeedButton
     Left = 300
-    Top = 4
-    Width = 30
     Height = 23
     Hint = 'Click to always use all available memory (maximum stress)'
+    Top = 4
+    Width = 30
     AllowAllUp = True
     Anchors = [akTop]
-    GroupIndex = 1
     Caption = 'All'
     Flat = True
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
+    GroupIndex = 1
     Layout = blGlyphTop
     Margin = 3
-    ParentFont = False
+    NumGlyphs = 0
     OnClick = SpeedButtonAllMemClick
+    ParentFont = False
   end
   object SpeedButtonStart: TSpeedButton
     Left = 5
-    Top = 30
-    Width = 75
     Height = 25
     Hint = 'Starts the testing process (Enter)'
+    Top = 30
+    Width = 75
     Caption = 'Start'
+    NumGlyphs = 0
     OnClick = SpeedButtonStartClick
   end
   object SpeedButtonStop: TSpeedButton
     Left = 440
-    Top = 30
-    Width = 75
     Height = 25
     Hint = 'Stops the testing immediately (Esc)'
+    Top = 30
+    Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Stop'
     Enabled = False
+    NumGlyphs = 0
     OnClick = SpeedButtonStopClick
-    ExplicitLeft = 435
   end
   object ShapeBase: TShape
     Left = 85
+    Height = 23
     Top = 31
     Width = 350
-    Height = 23
-    Anchors = [akLeft, akTop, akRight]
+    Anchors = [akTop, akLeft, akRight]
     Brush.Color = 15527662
     Pen.Color = clBtnShadow
     Shape = stRoundRect
-    ExplicitWidth = 345
   end
   object ShapeBar: TShape
     Left = 87
+    Height = 19
     Top = 33
     Width = 346
-    Height = 19
-    Anchors = [akLeft, akTop, akRight]
+    Anchors = [akTop, akLeft, akRight]
     Brush.Color = 13621203
     Pen.Color = 11976122
-    ExplicitWidth = 341
   end
   object LabelStatus: TLabel
     Left = 85
+    Height = 18
     Top = 36
     Width = 350
-    Height = 18
     Alignment = taCenter
-    Anchors = [akLeft, akTop, akRight]
+    Anchors = [akTop, akLeft, akRight]
     AutoSize = False
+    ParentColor = False
     PopupMenu = PopupMenuSettings
-    Transparent = True
     OnClick = Panel1Click
     OnDblClick = Panel1DblClick
-    ExplicitWidth = 345
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 255
-    Width = 520
     Height = 20
-    DoubleBuffered = True
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Panels = <
+    Top = 236
+    Width = 520
+    Panels = <    
       item
         Alignment = taCenter
         Width = 55
-      end
+      end    
       item
         Alignment = taCenter
         Width = 45
-      end
+      end    
       item
         Alignment = taCenter
         Width = 60
-      end
+      end    
       item
         Alignment = taCenter
         Width = 110
-      end
+      end    
       item
         Alignment = taCenter
         Width = 210
-      end
+      end    
       item
         Alignment = taCenter
         Width = 35
       end>
-    ParentDoubleBuffered = False
+    SimplePanel = False
     SizeGrip = False
-    UseSystemFont = False
     OnClick = StatusBarClick
+    OnDblClick = StatusBarDblClick
   end
   object ComboBoxPS: TComboBox
     Left = 74
-    Top = 5
-    Width = 60
     Height = 21
     Hint = 'Select a value from drop-down list or key in directly'
-    AutoComplete = False
-    BevelEdges = []
-    BevelInner = bvNone
-    BevelOuter = bvNone
-    DoubleBuffered = False
+    Top = 5
+    Width = 60
     ItemHeight = 13
     MaxLength = 5
-    ParentDoubleBuffered = False
-    TabOrder = 0
-    Text = '10000'
     OnChange = ComboBoxPSChange
     OnCloseUp = ComboBoxPSCloseUp
+    TabOrder = 0
+    Text = '10000'
   end
   object MemoLog: TMemo
+    Cursor = crArrow
     Left = 5
+    Height = 171
     Top = 60
     Width = 510
-    Height = 190
-    Cursor = crArrow
-    Margins.Left = 0
-    Margins.Top = 0
-    Margins.Right = 0
-    Margins.Bottom = 0
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    DoubleBuffered = True
-    Font.Charset = DEFAULT_CHARSET
+    Anchors = [akTop, akLeft, akRight, akBottom]
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Courier New'
-    Font.Style = []
-    ParentDoubleBuffered = False
     ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
@@ -224,44 +190,27 @@ object FormMain: TFormMain
   end
   object ComboBoxMem: TComboBox
     Left = 245
-    Top = 5
-    Width = 55
     Height = 21
     Hint = 'Select a value from drop-down list or key in directly '
-    AutoComplete = False
-    BevelEdges = []
-    BevelInner = bvNone
-    BevelOuter = bvNone
+    Top = 5
+    Width = 55
     Anchors = [akTop]
-    DoubleBuffered = False
     ItemHeight = 13
     MaxLength = 5
-    ParentDoubleBuffered = False
-    TabOrder = 1
-    Text = '1024'
     OnChange = ComboBoxMemChange
     OnCloseUp = ComboBoxMemCloseUp
+    TabOrder = 1
+    Text = '1024'
   end
   object ComboBoxRuns: TComboBox
     Left = 405
-    Top = 5
-    Width = 50
     Height = 21
     Hint = 'Select a value from drop-down list or key in directly'
-    AutoComplete = False
-    BevelEdges = []
-    BevelInner = bvNone
-    BevelOuter = bvNone
+    Top = 5
+    Width = 50
     Anchors = [akTop, akRight]
-    DoubleBuffered = False
     ItemHeight = 13
     ItemIndex = 2
-    MaxLength = 5
-    ParentDoubleBuffered = False
-    TabOrder = 2
-    Text = '10'
-    OnChange = ComboBoxRunsChange
-    OnCloseUp = ComboBoxRunsChange
     Items.Strings = (
       '3'
       '5'
@@ -276,63 +225,68 @@ object FormMain: TFormMain
       '200'
       '250'
       '300'
-      '500')
+      '500'
+    )
+    MaxLength = 5
+    OnChange = ComboBoxRunsChange
+    OnCloseUp = ComboBoxRunsChange
+    TabOrder = 2
+    Text = '10'
   end
   object ListViewTable: TListView
     Left = 0
+    Height = 175
     Top = 61
     Width = 520
-    Height = 194
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    BevelInner = bvNone
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BorderStyle = bsNone
-    Columns = <
+    Columns = <    
       item
         Caption = '#'
         MaxWidth = 30
         MinWidth = 30
         Width = 30
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'Size'
         MaxWidth = 50
         MinWidth = 50
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'LDA'
         MaxWidth = 50
         MinWidth = 50
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'Align'
         MaxWidth = 40
         MinWidth = 40
         Width = 40
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'Time'
         MaxWidth = 65
         MinWidth = 65
         Width = 65
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'GFlops'
         MaxWidth = 70
         MinWidth = 70
         Width = 70
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'Residual'
         MaxWidth = 95
         MinWidth = 95
         Width = 95
-      end
+      end    
       item
         Alignment = taCenter
         Caption = 'Residual (norm.)'
@@ -340,54 +294,46 @@ object FormMain: TFormMain
         MinWidth = 98
         Width = 98
       end>
-    DoubleBuffered = True
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
     GridLines = True
     HideSelection = False
+    ParentFont = False
     ReadOnly = True
     RowSelect = True
-    ParentDoubleBuffered = False
-    ParentFont = False
-    TabOrder = 3
     TabStop = False
+    TabOrder = 3
     ViewStyle = vsReport
   end
   object ComboBoxTimesMinutes: TComboBox
     Left = 460
+    Height = 21
     Top = 5
     Width = 55
-    Height = 21
-    BevelEdges = []
-    BevelInner = bvNone
-    BevelOuter = bvNone
-    Style = csDropDownList
     Anchors = [akTop, akRight]
-    DoubleBuffered = False
     ItemHeight = 13
     ItemIndex = 0
-    ParentDoubleBuffered = False
-    TabOrder = 6
-    Text = 'times'
-    OnChange = ComboBoxRunsChange
-    OnKeyPress = ComboBoxTimesMinutesKeyPress
     Items.Strings = (
       'times'
-      'minutes')
+      'minutes'
+    )
+    OnChange = ComboBoxRunsChange
+    OnKeyPress = ComboBoxTimesMinutesKeyPress
+    Style = csDropDownList
+    TabOrder = 6
+    Text = 'times'
   end
   object TimerMain: TTimer
     Enabled = False
     Interval = 985
     OnTimer = TimerMainTimer
-    Left = 12
-    Top = 209
+    left = 12
+    top = 184
   end
   object MainMenu: TMainMenu
-    Left = 403
-    Top = 27
+    left = 472
+    top = 96
     object MIFile: TMenuItem
       Caption = '&File'
       object MIScreenshot: TMenuItem
@@ -421,22 +367,22 @@ object FormMain: TFormMain
       OnClick = MIDisplayClick
     end
     object MIAbout: TMenuItem
-      Caption = '?'#160
+      Caption = '? '
       ShortCut = 112
       OnClick = MIAboutClick
     end
   end
   object TrayIcon: TTrayIcon
-    AnimateInterval = 0
-    PopupMenu = PopupMenuTray
+    PopUpMenu = PopupMenuTray
+    OnClick = TrayIconClick
     OnDblClick = TMMinimizeClick
-    Left = 475
-    Top = 209
+    left = 472
+    top = 184
   end
   object PopupMenuTray: TPopupMenu
     OnPopup = PopupMenuTrayPopup
-    Left = 408
-    Top = 209
+    left = 400
+    top = 184
     object TMMinimize: TMenuItem
       Caption = 'Minimize'
       Default = True
@@ -464,10 +410,10 @@ object FormMain: TFormMain
   end
   object PopupMenuSettings: TPopupMenu
     OnPopup = PopupMenuSettingsPopup
-    Left = 320
-    Top = 30
+    left = 400
+    top = 96
     object SMFullSettings: TMenuItem
-      Caption = 'All Settings'#8230
+      Caption = 'All Settings…'
       OnClick = MISettingsClick
     end
     object SMSep4: TMenuItem

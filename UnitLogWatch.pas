@@ -170,7 +170,7 @@ begin
         Trayicon.Hint := err_win_capt + ' - ' + version;
         TrayIcon.Icon := Tray2;
         Caption := err_win_capt + ' - ' + version;
-        WindowFlash(FLASHW_TRAY, Handle, 3, 250);
+        //WindowFlash(FLASHW_TRAY, Handle, 3, 250);
         if sounds then time_show_mode := 5;
       end;
       4 : begin
@@ -187,7 +187,7 @@ begin
         Trayicon.Hint := done_win_capt + ' - ' + version;
         TrayIcon.Icon := Tray2;
         Caption := done_win_capt + ' - ' + version;
-        WindowFlash(FLASHW_TRAY, Handle, 3, 250);
+        //WindowFlash(FLASHW_TRAY, Handle, 3, 250);
         if sounds then PlaySound('LowBatteryAlarm', 0, SND_ALIAS or SND_ASYNC);
       end;
       5 : begin
@@ -304,10 +304,10 @@ begin
     if NumberOfMinutes <> -1 then total_time := NumberOfMinutes * 60
     else total_time := round((Now - StartTime) / curr * NumberOfRuns * 86400);
 
-    Synchronize(UpdateMainForm);
+    Synchronize(@UpdateMainForm);
 
     if curr = 1 then begin
-      Synchronize(UnhideProgressbar);
+      Synchronize(@UnhideProgressbar);
     end;
     res_str := copy(s, 72, 4);
     if pos(res_str, 'pass') = 0 then
@@ -320,7 +320,7 @@ begin
     1 : begin
           LinpackLog := LinpackLog + ReadLogFooter(LinpackPipeRead, LinpackProcessInfo.hProcess,
     PipeReadEvent);
-          Synchronize(FullProgressbar);
+          Synchronize(@FullProgressbar);
           if was_error then stopcode := 4;
           WaitForSingleObject(LinpackProcessInfo.hProcess, INFINITE);
         end;
@@ -341,7 +341,7 @@ begin
   CloseHandle(LinpackProcessInfo.hProcess);
 
   if Win32MajorVersion > 5 then SetThreadPriority(Handle, $00020000);
-  Synchronize(StopExecution);
+  Synchronize(@StopExecution);
 end;
 
 end.

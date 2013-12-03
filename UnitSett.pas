@@ -219,11 +219,11 @@ begin
 
   if glass and (Win32MajorVersion >= 6) and CompositingEnabled then begin
     DoubleBuffered := true;
-    PanelLinpack.BevelKind := bkNone;
+//    PanelLinpack.BevelKind := bkNone;
     PanelLinpack.BevelOuter := bvRaised;
-    PanelLinX.BevelKind := bkNone;
+//    PanelLinX.BevelKind := bkNone;
     PanelLinX.BevelOuter := bvRaised;
-    PanelExtApps.BevelKind := bkNone;
+//    PanelExtApps.BevelKind := bkNone;
     PanelExtApps.BevelOuter := bvRaised;
     PanelLinpack.Left := PanelLinpack.Left - 5;
     PanelLinpack.Top := PanelLinpack.Top - 5;
@@ -237,8 +237,8 @@ begin
     ButtonCancel.Left := ButtonCancel.Left - 5;
     ClientWidth := ClientWidth - 10;
     ClientHeight := ClientHeight - 10;
-    GlassFrame.Enabled := true;
-    GlassFrame.SheetOfGlass := true;
+//    GlassFrame.Enabled := true;
+//    GlassFrame.SheetOfGlass := true;
   end;
 
   UpDownThreads.Position := NumberOfThreads;
@@ -287,7 +287,7 @@ begin
   if Key = VK_F5 then begin
     if datetimeinnames then filename := AddDateTimeToFilename(progname, 'png', Now)
     else filename := progname + '.png';
-    WindowScreenshot(FormMain.Handle, filename);
+    //WindowScreenshot(FormMain.Handle, filename);
   end;
 end;
 

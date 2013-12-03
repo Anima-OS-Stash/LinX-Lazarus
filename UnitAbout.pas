@@ -5,7 +5,7 @@ interface
 
 uses
   Windows, SysUtils, Classes, {Graphics,} Controls, Forms, StdCtrls, ShellAPI,
-  PNGImage, IniFiles, Buttons;
+  IniFiles, Buttons;
 
 type
   TFormAbout = class(TForm)
@@ -103,14 +103,6 @@ begin
   SpeedButtonReadMe.Enabled := fileexists('readme.txt');
   if glass and (Win32MajorVersion >= 6) and CompositingEnabled then begin
     DoubleBuffered := true;
-    GlassFrame.Enabled := true;
-    for I := 0 to ControlCount - 1 do
-      if (Controls[i] is TLabel) then begin
-        (Controls[i] as TLabel).GlowSize := 8;
-        if ((Controls[i] as TLabel).AutoSize = false) and
-          ((Controls[i] as TLabel).Layout = tlCenter)
-          then (Controls[i] as TLabel).Top := (Controls[i] as TLabel).Top + 8;
-      end;
   end;
   SpeedButtonInfo.Down := true;
   SpeedButtonInfo.Click;
@@ -183,7 +175,7 @@ begin
   if Key = VK_F5 then begin
     if datetimeinnames then filename := AddDateTimeToFilename(progname, 'png', Now)
     else filename := progname + '.png';
-    WindowScreenshot(FormMain.Handle, filename);
+    //WindowScreenshot(FormMain.Handle, filename);
   end;
 end;
 

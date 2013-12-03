@@ -1,264 +1,250 @@
 object FormAbout: TFormAbout
-  Left = 0
-  Top = 0
+  Left = 460
+  Height = 250
+  Top = 344
+  Width = 350
   BorderStyle = bsToolWindow
   Caption = 'About LinX'
   ClientHeight = 250
   ClientWidth = 350
   Color = clBtnFace
-  ParentFont = True
-  GlassFrame.SheetOfGlass = True
   KeyPreview = True
-  OldCreateOrder = False
-  Position = poMainFormCenter
-  ShowHint = True
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  PixelsPerInch = 96
-  TextHeight = 13
+  ParentFont = True
+  Position = poMainFormCenter
+  ShowHint = True
+  LCLVersion = '1.0.14.0'
   object LabelFacts: TLabel
     Left = 5
+    Height = 105
     Top = 140
     Width = 340
-    Height = 105
     Alignment = taCenter
     AutoSize = False
-    Transparent = True
+    ParentColor = False
     Visible = False
     WordWrap = True
   end
   object LabelInfo: TLabel
     Left = 5
+    Height = 90
     Top = 37
     Width = 340
-    Height = 90
     Alignment = taCenter
     AutoSize = False
-    Transparent = True
+    ParentColor = False
     Visible = False
     WordWrap = True
   end
   object LabelDiscl: TLabel
     Left = 5
+    Height = 51
     Top = 137
     Width = 90
-    Height = 51
     Alignment = taCenter
     AutoSize = False
-    Caption = 'This software is provided '#171'as-is'#187'. Use it at your own risk.'
-    Font.Charset = DEFAULT_CHARSET
+    Caption = 'This software is provided «as-is». Use it at your own risk.'
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
+    ParentColor = False
     ParentFont = False
-    Transparent = True
     WordWrap = True
   end
   object LabelEMail: TLabel
     Left = 105
+    Height = 14
     Top = 135
-    Width = 32
-    Height = 13
+    Width = 33
     Caption = 'E-Mail:'
-    Transparent = True
+    ParentColor = False
   end
   object LabelOversLink: TLabel
     Left = 105
-    Top = 175
-    Width = 232
-    Height = 13
+    Height = 14
     Hint = 'http://forums.overclockers.ru/viewtopic.php?t=272642'
-    Caption = #1056#1091#1089#1089#1082#1072#1103' '#1074#1077#1090#1082#1072' '#1086#1073#1089#1091#1078#1076#1077#1085#1080#1103' '#1085#1072' Overclockers.ru'
-    Font.Charset = DEFAULT_CHARSET
+    Top = 175
+    Width = 209
+    Caption = '??????? ????? ?????????? ?? Overclockers.ru'
     Font.Color = 8866336
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
     OnClick = LabelOversLinkClick
     OnMouseEnter = LabelsMouseEnter
     OnMouseLeave = LabelsMouseLeave
   end
   object LabelXSLink: TLabel
     Left = 105
-    Top = 155
-    Width = 229
-    Height = 13
+    Height = 14
     Hint = 'http://www.xtremesystems.org/forums/showthread.php?t=201670'
+    Top = 155
+    Width = 230
     Caption = 'English discussion thread at XtremeSystems.org'
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = 8866336
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
     OnClick = LabelXSLinkClick
     OnMouseEnter = LabelsMouseEnter
     OnMouseLeave = LabelsMouseLeave
   end
   object LabelLin: TLabel
     Left = 5
-    Top = 41
-    Width = 60
     Height = 90
     Hint = 'LinX'
+    Top = 41
+    Width = 60
     Alignment = taCenter
     AutoSize = False
     Caption = 'Lin'
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = 10773812
     Font.Height = -45
     Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
     Layout = tlCenter
+    ParentColor = False
+    ParentFont = False
   end
   object LabelX: TLabel
     Left = 65
-    Top = 41
-    Width = 29
     Height = 90
     Hint = 'LinX'
+    Top = 41
+    Width = 29
     Alignment = taCenter
     AutoSize = False
     Caption = 'X'
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = 31221
     Font.Height = -45
     Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
     Layout = tlCenter
+    ParentColor = False
+    ParentFont = False
   end
   object LabelThanks1: TLabel
     Left = 5
+    Height = 14
     Top = 200
-    Width = 321
-    Height = 13
-    Caption = 
-      'Special thanks to Right from Overclockers.ru for AMD compatibili' +
-      'ty.'
-    Transparent = True
+    Width = 322
+    Caption = 'Special thanks to Right from Overclockers.ru for AMD compatibility.'
+    ParentColor = False
   end
   object LabelThanks2: TLabel
     Left = 5
+    Height = 30
     Top = 215
     Width = 340
-    Height = 30
     AutoSize = False
-    Caption = 
-      'Thanks to everybody who helps improve LinX for their suggestions' +
-      ' and bug reports, and especially to my friends, SqeptiQ, Winkle ' +
-      'and YaK.'
-    Transparent = True
+    Caption = 'Thanks to everybody who helps improve LinX for their suggestions and bug reports, and especially to my friends, SqeptiQ, Winkle and YaK.'
+    ParentColor = False
     WordWrap = True
   end
   object LabelIntel1: TLabel
     Left = 105
+    Height = 14
     Top = 55
-    Width = 167
-    Height = 13
-    Caption = 'Uses Intel'#174' Math Kernel Library '#8212
-    Transparent = True
+    Width = 168
+    Caption = 'Uses Intel® Math Kernel Library —'
+    ParentColor = False
   end
   object LabelIntel2: TLabel
     Left = 105
+    Height = 14
     Top = 70
-    Width = 155
-    Height = 13
-    Caption = 'Copyright '#169' Intel'#174' Corporation'
-    Transparent = True
+    Width = 156
+    Caption = 'Copyright © Intel® Corporation'
+    ParentColor = False
   end
   object LabelLinpackLink: TLabel
     Left = 278
-    Top = 54
-    Width = 35
-    Height = 13
+    Height = 14
     Hint = 'http://www.intel.com/cd/software/products/asmo-na/eng/266857.htm'
+    Top = 54
+    Width = 36
     Caption = 'Linpack'
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = 8866336
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
     OnClick = LabelLinpackLinkClick
     OnMouseEnter = LabelsMouseEnter
     OnMouseLeave = LabelsMouseLeave
   end
   object LabelMe: TLabel
     Left = 105
+    Height = 14
     Top = 35
-    Width = 191
-    Height = 13
+    Width = 192
     Caption = 'Author: Alexander Gusev a.k.a. Dua|ist'
-    Transparent = True
+    ParentColor = False
   end
   object LabelPNG: TLabel
     Left = 105
+    Height = 14
     Top = 90
-    Width = 222
-    Height = 13
-    Caption = 'Uses PNG Delphi Component by Gustavo Daud'
-    Transparent = True
+    Width = 77
+    Caption = 'No PNG support'
+    ParentColor = False
   end
   object SpeedButtonInfo: TSpeedButton
     Left = 5
+    Height = 25
     Top = 5
     Width = 75
-    Height = 25
-    GroupIndex = 1
     Caption = 'Info'
+    GroupIndex = 1
+    NumGlyphs = 0
     OnClick = SpeedButtonInfoClick
   end
   object SpeedButtonAbout: TSpeedButton
     Left = 80
+    Height = 25
     Top = 5
     Width = 75
-    Height = 25
-    GroupIndex = 1
     Caption = 'About'
+    GroupIndex = 1
+    NumGlyphs = 0
     OnClick = SpeedButtonAboutClick
   end
   object SpeedButtonReadMe: TSpeedButton
     Left = 165
+    Height = 25
     Top = 5
     Width = 75
-    Height = 25
-    Caption = 'ReadMe'#8230
+    Caption = 'ReadMe…'
+    NumGlyphs = 0
     OnClick = SpeedButtonReadMeClick
   end
   object LabelVersion: TLabel
     Left = 245
+    Height = 13
     Top = 12
     Width = 100
-    Height = 13
     Alignment = taRightJustify
     AutoSize = False
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clGrayText
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
+    ParentColor = False
     ParentFont = False
-    Transparent = True
   end
   object EditEMailLink: TEdit
     Left = 140
+    Height = 21
     Top = 132
     Width = 130
-    Height = 21
     Alignment = taCenter
     Color = clBtnFace
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
     ParentFont = False
     ReadOnly = True
     TabOrder = 0

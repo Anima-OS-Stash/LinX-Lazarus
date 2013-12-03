@@ -6,9 +6,12 @@ interface
 uses
   Windows, Messages, SysUtils, {Variants,} Classes, Graphics, Controls, Forms,
   {Dialogs,} StdCtrls, Menus, ExtCtrls, ComCtrls, MMSystem, IniFiles,
-  Buttons, UnitLogWatch;
+  Buttons, UnitLogWatch, Dialogs, LResources;
 
 type
+
+  { TFormMain }
+
   TFormMain = class(TForm)
     ComboBoxPS: TComboBox;
     ComboBoxRuns: TComboBox;
@@ -61,8 +64,9 @@ type
     procedure Panel1Click(Sender: TObject);
     procedure MIAboutClick(Sender: TObject);
     procedure ComboBoxRunsChange(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure SpeedButtonStopClick(Sender: TObject);
+    procedure StatusBarDblClick(Sender: TObject);
     procedure TimerMainTimer(Sender: TObject);
     procedure ComboBoxMemChange(Sender: TObject);
     procedure ComboBoxPSChange(Sender: TObject);
@@ -101,6 +105,7 @@ type
     procedure ToggleTableLog;
     procedure ToggleGlass(enable : boolean);
     procedure ComboBoxTimesMinutesKeyPress(Sender: TObject; var Key: Char);
+    procedure TrayIconClick(Sender: TObject);
   private
     { Private declarations }
     procedure WMNCLBUTTONDBLCLK(var msg: TMessage); message WM_NCLBUTTONDBLCLK;
@@ -247,10 +252,10 @@ var
   str_mib : string = 'MiB'; str_flops : string = 'GFlops';
   str_32 : string = '32-bit'; str_64 : string = '64-bit';
   str_h : string = 'h'; str_m : string = 'm'; str_s : string = 's';
-  str_grad : string = '°'; str_volts : string = 'V'; str_mhz : string = 'MHz';
-  str_sep : string = '|'; str_log : string = 'Log ›'; str_table : string = '‹ Table';
-  str_rpm : string = 'RPM'; str_celsius : string = '°C';
-  str_wait : string = 'Please wait…';
+  str_grad : string = 'deg'; str_volts : string = 'V'; str_mhz : string = 'MHz';
+  str_sep : string = '|'; str_log : string = 'Log'; str_table : string = 'Table';
+  str_rpm : string = 'RPM'; str_celsius : string = 'deg';
+  str_wait : string = 'Please wait ...';
   str_finish_time : string = 'Estimated finish time:';
   str_elapsed : string = 'Elapsed';
   str_remaining : string = 'Remaining';
@@ -263,7 +268,7 @@ var
   memo_hint2 : string = 'Click - cycle time view modes, double click - disable time';
   memo_hint3 : string = 'Right mouse click - settings menu';
 
-  msg_comline : string = 'All command-line parameters start with a „-“ or a „/“,' + #13#10 +
+  msg_comline :string = 'All command-line parameters start with a "-" or a "/",' + #13#10 +
                          'e. g. /help or -help. X is any decimal digit.' + #13#10 + #13#10 +
                          'Supported command-line switches:' + #13#10 + #13#10 +
                          '?, h, help - displays this message;' + #13#10 +
@@ -308,6 +313,11 @@ end;
 procedure TFormMain.SpeedButtonStopClick(Sender: TObject);
 begin
   TerminateProcess(LinpackProcessInfo.hProcess, 2);
+end;
+
+procedure TFormMain.StatusBarDblClick(Sender: TObject);
+begin
+
 end;
 
 procedure TFormMain.SpeedButtonStartClick(Sender: TObject);
@@ -440,6 +450,11 @@ begin
   Key := #0;
 end;
 
+procedure TFormMain.TrayIconClick(Sender: TObject);
+begin
+
+end;
+
 procedure TFormMain.ComboBoxMemChange(Sender: TObject);
 begin
   PSandMem(false, ProblemSize, true);
@@ -450,13 +465,13 @@ begin
   PSandMem(false, ProblemSize, false);
 end;
 
-procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFormMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   if time_show_mode < 4 then begin
     if MessageBox(Handle, PChar(msg_exit_prompt), PChar(version),
                   MB_YESNO or MB_ICONQUESTION) = IDYES
       then TerminateProcess(LinpackProcessInfo.hProcess, 2)
-    else Action := caNone;
+    else CloseAction := caNone;
   end;
 end;
 
@@ -498,7 +513,7 @@ var maininifile, SFinifile, localizationfile : tinifile;
       item.Caption := GetThreadsString(i + 1);
       item.RadioItem := true;
       item.AutoCheck := true;
-      item.OnClick := th1Click;
+      item.OnClick := @th1Click;
       Menu.Insert(Menu.Count, item);
     end;
     item := Tmenuitem.Create(Menu);
@@ -724,7 +739,7 @@ begin
   EXEDirectory := ExtractFilePath(Application.ExeName);
   SetCurrentDir(EXEDirectory);
 
-  localize;
+  //localize;
   Caption := version + ' - ' + idle_win_capt;
 
   if not fileexists(EXEDirectory + lin32exe_name) then begin
@@ -797,16 +812,16 @@ begin
 
     LabelStatus.Hint := memo_hint3;
     Application.Title := version;
-    Application.OnMinimize := OnMinimize;
+    Application.OnMinimize := @OnMinimize;
 
     Tray0 := TIcon.Create;
-    Tray0.Handle := LoadIcon(HInstance, 'Tray0');
+    Tray0.LoadFromLazarusResource('Tray0');
     Tray1 := TIcon.Create;
-    Tray1.Handle := LoadIcon(HInstance, 'Tray1');
+    Tray1.LoadFromLazarusResource('Tray1');
     Tray2 := TIcon.Create;
-    Tray2.Handle := LoadIcon(HInstance, 'Tray2');
+    Tray2.LoadFromLazarusResource('Tray2');
     Tray3 := TIcon.Create;
-    Tray3.Handle := LoadIcon(HInstance, 'Tray3');
+    Tray3.LoadFromLazarusResource('Tray3');
 
     TrayIcon.Icon := Tray1;
     TrayIcon.Hint := version;
@@ -1000,7 +1015,7 @@ end;
 
 procedure TFormMain.FormResize(Sender: TObject);
 begin
-  GlassFrame.Bottom := ClientHeight;
+  //GlassFrame.Bottom := ClientHeight;
 end;
 
 procedure TFormMain.TimerMainTimer(Sender: TObject);
@@ -1255,8 +1270,8 @@ function Monitoring(b_everest, b_speedfan, b_temps, b_fans, b_vcores, b_p12vs,
 type  TSharedMem = packed record
         version:word;
         flags :word;
-        MemSize:integer;
-        handle :THandle;
+        MemSize:Longint;
+        handle :Longint;
         NumTemps:word;
         NumFans :word;
         NumVolts:word;
@@ -1424,7 +1439,7 @@ var filename : string;
 begin
   if datetimeinnames then filename := AddDateTimeToFilename(progname, 'png', Now)
   else filename := progname + '.png';
-  WindowScreenShot(Handle, filename);
+  //WindowScreenShot(Handle, filename);
 end;
 
 procedure TFormMain.MILogClick(Sender: TObject);
@@ -1738,15 +1753,15 @@ procedure TFormMain.ToggleGlass(enable : boolean);
 begin
   if enable and CompositingEnabled then begin
     DoubleBuffered := true;
-    GlassFrame.Enabled := true;
+    //GlassFrame.Enabled := true;
     SpeedButtonAllMem.Flat := false;
-    Glassframe.Bottom := ClientHeight;
+    //Glassframe.Bottom := ClientHeight;
     ListViewTable.Columns.BeginUpdate;
     ListViewTable.Columns.EndUpdate;
-    LabelPS.GlowSize := 8;
-    LabelMem.GlowSize := 8;
-    LabelRuns.GlowSize := 8;
-    LabelStatus.GlowSize := 8;
+    //LabelPS.GlowSize := 8;
+    //LabelMem.GlowSize := 8;
+    //LabelRuns.GlowSize := 8;
+    //LabelStatus.GlowSize := 8;
     ShapeBase.Brush.Style := bsClear;
     ShapeBase.Pen.Mode := pmWhite;
     ShapeBar.Top := ShapeBar.Top + 1;
@@ -1768,17 +1783,17 @@ begin
     ComboboxRuns.Left := ComboboxRuns.Left + 4;
     ComboboxTimesMinutes.Left := ComboboxTimesMinutes.Left + 4;
     ComboboxTimesMinutes.Style := csDropDown;
-    OnResize := FormResize;
+    OnResize := @FormResize;
   end
   else begin
     DoubleBuffered := false;
-    GlassFrame.Enabled := false;
+    //GlassFrame.Enabled := false;
     SpeedButtonAllMem.Flat := true;
-    Glassframe.Bottom := 0;
-    LabelPS.GlowSize := 0;
-    LabelMem.GlowSize := 0;
-    LabelRuns.GlowSize := 0;
-    LabelStatus.GlowSize := 0;
+    //Glassframe.Bottom := 0;
+    //LabelPS.GlowSize := 0;
+    //LabelMem.GlowSize := 0;
+    //LabelRuns.GlowSize := 0;
+    //LabelStatus.GlowSize := 0;
     ShapeBase.Brush.Style := bsSolid;
     ShapeBase.Pen.Mode := pmCopy;
     ShapeBar.Top := ShapeBar.Top - 1;
@@ -1830,5 +1845,8 @@ procedure TFormMain.OnMinimize(Sender : TObject);
 begin
   if TrayIcon.Visible then Visible := false;
 end;
+
+initialization
+  {$I tray_icons.lrs}
 
 end.

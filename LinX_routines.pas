@@ -1,5 +1,6 @@
 ﻿{$STRINGCHECKS OFF}
 unit LinX_routines;
+{$ASMMODE intel}
 
 interface
 uses Windows;
@@ -41,8 +42,6 @@ function GetFreeMemory : word;
 
 function GetTotalMemory: word;
 
-procedure WindowScreenShot(WinHandle : HWND; Filename : string);
-
 procedure WindowFlash(Flashtype : cardinal; WinHandle : HWND;
                       Count, Timeout : cardinal);
 
@@ -61,7 +60,7 @@ function AddDateTimeToFilename (Filename, Extension : string; TimeToAdd : TDateT
 procedure CalcMinMax(var data_arr: array of single; arrlength : integer; var min, max : real);
 
 implementation
-uses SysUtils, Graphics, PngImage, StrUtils;
+uses SysUtils, Graphics, StrUtils;
 
 type TMemoryStatusEx = packed record
        dwLength: DWORD;
@@ -326,10 +325,17 @@ function IsX64Supported : boolean;
 var IsWow64Process  : function(Handle: THandle; var Res: BOOL): BOOL; stdcall;
     IsWow64Result: BOOL;
 begin
+{
+  // Wrong: this will detect 32 bit procs on 64 bit OS
   result := false;
-  IsWow64Process := GetProcAddress(GetModuleHandle('kernel32'), 'IsWow64Process');
+  Pointer(IsWow64Process) := GetProcAddress(GetModuleHandle('kernel32'), 'IsWow64Process');
   if Assigned(IsWow64Process) and IsWow64Process(GetCurrentProcess, IsWow64Result)
     then result := IsWow64Result;
+}
+  Result  := false;
+  {$ifdef CPU64}
+       Result  := true;
+  {$ENDIF}
 end;
 
 function GetTempFolderPath : string;
@@ -362,54 +368,13 @@ begin
   result := MemoryStatusEx.ullTotalPhys div 1048576;
 end;
 
-procedure WindowScreenShot(WinHandle : HWND; filename : string);
-var DC : HDC; r : TRect; destBitmap : TBitmap; destPNG : TPNGImage;
-begin
-   dc := GetWindowDC(GetDesktopWindow);
-   GetWindowRect(WinHandle,r) ;
-   destBitmap := TBitmap.Create;
-   destPNG := TPNGImage.Create;
-   try
-     destBitmap.Width := r.Right - r.Left;
-     destBitmap.Height := r.Bottom - r.Top;
-     BitBlt(destBitmap.Canvas.Handle, 0, 0, destBitmap.Width, destBitmap.Height,
-            DC, r.Left, r.Top, SRCCOPY);
-     destPNG.assign(destBitmap);
-     destPNG.SaveToFile(filename);
-   finally
-     ReleaseDC(GetDesktopWindow, DC) ;
-     destBitmap.FreeImage;
-     Freeandnil(destBitmap);
-     destPNG.Free;
-   end;
-end;
 
 function GetCPUBrandString : string;
-  function CPUIDAvail : boolean; assembler;
-  {Tests whether the CPUID instruction is available}
-  asm
-    pushfd // get flags into ax
-    pop eax // save a copy on the stack
-    mov edx,eax
-    xor eax, 0200000h // flip bit 21
-    push eax // load new value into flags
-    popfd // get them back
-    pushfd
-    pop eax
-    xor eax,edx
-    and eax, 0200000h // clear all but bit 21
-    shr eax, 21
-  end;
-
 var s:array[0..48] of ansichar;
 begin
   fillchar(s,sizeof(s),0);
-  if CPUIDAvail then begin
+  //if CPUIDAvail then begin
     asm
-      //save regs
-      push ebx
-      push ecx
-      push edx
       //check if necessary extended CPUID calls are
       //supported, if not return null string
       mov eax,080000000h
@@ -438,14 +403,8 @@ begin
       mov longword(s[40]),ecx
       mov longword(s[44]),edx
     @@endbrandstr:
-      //restore regs
-      pop edx
-      pop ecx
-      pop ebx
     end;
     result:=string(s);
-  end
-  else result := '';
 end;
 
 function GetCPUName : string;
@@ -456,8 +415,8 @@ begin
     s := stringreplace(s,'  ','',[rfReplaceAll]);
     s := stringreplace(s,'CPU','',[rfIgnoreCase]);
     s := stringreplace(s,'Processor','',[rfIgnoreCase]);
-    s := stringreplace(s,'(R)','®',[rfReplaceAll,rfIgnoreCase]);
-    s := stringreplace(s,'(TM)','™',[rfReplaceAll,rfIgnoreCase]);
+    s := stringreplace(s,'(R)','',[rfReplaceAll,rfIgnoreCase]);
+    s := stringreplace(s,'(TM)','',[rfReplaceAll,rfIgnoreCase]);
     s := stringreplace(s,'  ',' ',[rfReplaceAll]);
     if pos('@',s) <> 0 then delete(s,pos('@',s),10);
     result := trimright(s);
@@ -467,16 +426,8 @@ end;
 
 procedure WindowFlash(Flashtype : cardinal; WinHandle : HWND;
                       Count, Timeout : cardinal);
-var
-  FWinfo: TFlashWInfo;
 begin
-  FWinfo.cbSize := SizeOf(TFlashWInfo);
-  FWinfo.hwnd := WinHandle; // Handle of Window to flash
-  FWinfo.dwflags := Flashtype;//FLASHW_ALL;
-  SystemParametersInfo(SPI_GETFOREGROUNDFLASHCOUNT, 0,
-                       @FWinfo.uCount, 0); //number of times to flash (get from Windows)
-  FWinfo.dwtimeout := Timeout; // speed in ms, 0 default blink cursor rate
-  FlashWindowEx(FWinfo); // make it flash!
+
 end;
 
 function SizeToMem(Size: cardinal) : cardinal;
@@ -524,7 +475,7 @@ begin
 
     if DLLHandle <> 0 then
     begin
-      @DwmIsCompositionEnabledProc := GetProcAddress(DLLHandle,
+      Pointer(DwmIsCompositionEnabledProc) := GetProcAddress(DLLHandle,
         DwmIsCompositionEnabledSig);
 
       if (@DwmIsCompositionEnabledProc <> nil) then

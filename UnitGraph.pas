@@ -5,7 +5,7 @@ interface
 
 uses
   Windows, {Messages,} SysUtils, {Variants,} Classes, Graphics, Controls, Forms,
-  {Dialogs,} PNGImage, StdCtrls, Buttons;
+  {Dialogs,} StdCtrls, Buttons;
 
 type
   TFormGraph = class(TForm)
@@ -23,7 +23,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure EditMaxExit(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDblClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -50,7 +50,7 @@ procedure PaintGraph(buf : TFormGraph; font, grid, graph : TColor;
                      var data_arr : Dataarray; arrlength : integer;
                      gridx : integer; gridy : real;
                      var des_min, des_max : real;
-                     var graph_capt, meas_unit : string);
+                     var graph_capt : string; meas_unit : string);
 const xoffset = 35; yoffset = 15; topoffset = 20; rightoffset = 5;
 var i, w, h : word; dy, dx, min, max : real;
     time_st : string;
@@ -161,7 +161,7 @@ begin
   FormPaint(EditMax.Parent);
 end;
 
-procedure TFormGraph.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFormGraph.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   if (Sender.Equals(FormTemps)) then begin
     GraphWindows[1].Left := FormTemps.Left;
@@ -193,43 +193,29 @@ begin
         GraphWindows[4].Bottom := FormP12Vs.Top + FormP12Vs.Height;
         FormP12Vs := nil;
       end;
-  Action := caFree;
+  CloseAction := caFree;
 end;
 
 procedure TFormGraph.FormCreate(Sender: TObject);
 begin
   if glass and (Win32MajorVersion >= 6) and CompositingEnabled then begin
-    GlassFrame.Enabled := true;
+//    GlassFrame.Enabled := true;
     Canvas.Pen.Mode := pmNotXor;
   end;
 end;
 
 procedure TFormGraph.FormDblClick(Sender: TObject);
-var png : TPNGImage; filename : string; buf : TBitmap;
+
 begin
-  png := TPNGImage.Create;
-  buf := TBitmap.Create;
-  buf.Width := (Sender as TFormGraph).ClientWidth;
-  buf.Height := (Sender as TFormGraph).ClientHeight;
-  BitBlt(buf.Canvas.Handle, 0, 0, buf.Width, buf.Height,
-    (Sender as TFormGraph).Canvas.Handle, 0, 0, SRCCOPY);
-  png.Assign(buf);
-  if (Sender.Equals(FormTemps)) then filename := temps_file_name
-  else
-    if (Sender.Equals(FormFans)) then filename := fans_file_name
-    else
-      if (Sender.Equals(FormVcores)) then filename := vcores_file_name
-      else filename := p12vs_file_name;
-  if datetimeinnames then filename := AddDateTimeToFilename(filename, 'png', Now)
-  else filename := filename + '.png';
-  png.SaveToFile(filename);
-  png.Free;
-  buf.Free;
+
 end;
 
 procedure TFormGraph.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not charinset(key, ['0'..'9',#8,#13,DecimalSeparator]) then key := #0;
+  if (key <> '0') and (key <> '1') and (key <> '2') and (key <> '3') and
+     (key <> '4') and (key <> '5') and (key <> '6') and (key <> '7') and
+     (key <> '8') and (key <> '9') and (key <> #8 ) and (key <> #13) and
+     (key <> DecimalSeparator) then key := #0;
 end;
 
 procedure TFormGraph.FormMouseDown(Sender: TObject; Button: TMouseButton;
